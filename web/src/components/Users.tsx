@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import { gql, useQuery } from '@apollo/client';
 
 const USERS_QUERY = gql`
@@ -12,17 +12,20 @@ const USERS_QUERY = gql`
 
 interface User {
   name: string;
+  id: number;
 }
 
-export default function Users() {
+const Users = () => {
   const { loading, error, data } = useQuery(USERS_QUERY);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error.message}</p>;
   return (
-    <div>
+    <Fragment>
       {data.allUsers.map((user: User) => (
-        <p>{user.name}</p>
+        <p key={user.id}>{user.name}</p>
       ))}
-    </div>
+    </Fragment>
   );
-}
+};
+
+export default Users;
