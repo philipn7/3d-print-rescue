@@ -13,6 +13,7 @@ import {
   arg,
   asNexusMethod,
   enumType,
+  idArg,
 } from 'nexus'
 import { DateTimeResolver } from 'graphql-scalars'
 import { Context } from './context'
@@ -164,6 +165,64 @@ const Mutation = objectType({
       },
     })
 
+    t.field('createProfile', {
+      type: 'Profile',
+      args: {
+        bio: stringArg(),
+        location: stringArg(),
+        avatar: stringArg(),
+      },
+      resolve: (_parent, args, context: Context) => {
+        const userId = getUserId(context)
+        return context.prisma.profile.create({
+          data: {
+            ...args,
+            user: { connect: { id: Number(userId) } },
+          },
+        })
+      },
+    })
+
+    t.field('updateProfile', {
+      type: 'Profile',
+      args: {
+        id: intArg(),
+        bio: stringArg(),
+        location: stringArg(),
+        avatar: stringArg(),
+      },
+      resolve: (_parent, { id, ...args }, context: Context) => {
+        const userId = getUserId(context)
+        return context.prisma.profile.update({
+          data: {
+            ...args,
+            user: { connect: { id: Number(userId) } },
+          },
+          where: {
+            id: Number(id),
+          },
+        })
+      },
+    })
+
+    t.field('createProfile', {
+      type: 'Profile',
+      args: {
+        bio: stringArg(),
+        location: stringArg(),
+        avatar: stringArg(),
+      },
+      resolve: (_parent, args, context: Context) => {
+        const userId = getUserId(context)
+        return context.prisma.profile.create({
+          data: {
+            ...args,
+            user: { connect: { id: Number(userId) } },
+          },
+        })
+      },
+    })
+
     t.field('createDraft', {
       type: 'Post',
       args: {
@@ -257,6 +316,16 @@ const User = objectType({
           .posts()
       },
     })
+    t.field('profile', {
+      type: 'Profile',
+      resolve: (parent, _, context: Context) => {
+        return context.prisma.user
+          .findUnique({
+            where: { id: parent.id || undefined },
+          })
+          .profile()
+      },
+    })
   },
 })
 
@@ -278,6 +347,27 @@ const Post = objectType({
             where: { id: parent.id || undefined },
           })
           .author()
+      },
+    })
+  },
+})
+
+const Profile = objectType({
+  name: 'Profile',
+  definition(t) {
+    t.nonNull.int('id')
+    t.nonNull.field('createdAt', { type: 'DateTime' })
+    t.string('bio')
+    t.string('location')
+    t.string('avatar')
+    t.field('user', {
+      type: 'User',
+      resolve: (parent, _, context: Context) => {
+        return context.prisma.profile
+          .findUnique({
+            where: { id: parent.id || undefined },
+          })
+          .user()
       },
     })
   },
@@ -333,6 +423,7 @@ const schemaWithoutPermissions = makeSchema({
     Query,
     Mutation,
     Post,
+    Profile,
     User,
     AuthPayload,
     UserUniqueInput,

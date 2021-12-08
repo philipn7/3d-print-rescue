@@ -7,6 +7,7 @@ import { setContext } from '@apollo/client/link/context';
 import Signup from './Pages/Signup';
 import Login from './Pages/Login';
 import RequireAuth from './components/RequireAuth';
+import Profile from './Pages/Profile';
 
 // Local storage cookies are NOT secure. Change this later...
 const httpLink = createHttpLink({ uri: 'http://localhost:4000' });
@@ -37,6 +38,14 @@ const App = () => {
             element={
               <RequireAuth>
                 <Users />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <RequireAuth>
+                <Profile />
               </RequireAuth>
             }
           />

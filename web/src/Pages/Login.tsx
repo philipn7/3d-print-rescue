@@ -19,7 +19,7 @@ interface LoginValues {
 }
 
 const Login = () => {
-  const [login, { data }] = useMutation(LOGIN_MUTATION);
+  const [login] = useMutation(LOGIN_MUTATION);
   const navigate = useNavigate();
   const { state } = useLocation();
 

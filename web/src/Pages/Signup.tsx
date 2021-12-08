@@ -21,7 +21,7 @@ interface SignupValues {
 }
 
 const Signup = () => {
-  const [signup, { data }] = useMutation(SIGNUP_MUTATION);
+  const [signup] = useMutation(SIGNUP_MUTATION);
   let navigate = useNavigate();
 
   const initialValues: SignupValues = {
