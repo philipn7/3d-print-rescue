@@ -4,6 +4,7 @@ import { ErrorMessage, Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
 import PrintRescueLogo from '../styles/assets/logo.png';
+import '../styles/login.css';
 
 const SIGNUP_MUTATION = gql`
   mutation signup($name: String, $email: String!, $password: String!) {
