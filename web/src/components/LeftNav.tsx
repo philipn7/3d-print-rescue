@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import favicon from '../styles/assets/logo.png';
 import '../styles/leftNav.css';
 
-function LeftNav() {
+const LeftNav: React.FC = () => {
   return (
     <div>
       <Link to="/users">
@@ -38,6 +38,6 @@ function LeftNav() {
       </Link>
     </div>
   );
-}
+};
 
 export default LeftNav;

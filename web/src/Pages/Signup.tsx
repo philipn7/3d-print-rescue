@@ -21,7 +21,7 @@ interface SignupValues {
   name: string;
 }
 
-const Signup = () => {
+const Signup: React.FC = () => {
   const [signup] = useMutation(SIGNUP_MUTATION);
   let navigate = useNavigate();
 

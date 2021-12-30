@@ -21,7 +21,7 @@ export const ME_QUERY = gql`
   }
 `;
 
-function Profile() {
+const Profile: React.FC = () => {
   const navigate = useNavigate();
   const { loading, error, data } = useQuery(ME_QUERY);
   if (loading) return <p>Loading...</p>;
@@ -66,6 +66,6 @@ function Profile() {
       </div>
     </>
   );
-}
+};
 
 export default Profile;

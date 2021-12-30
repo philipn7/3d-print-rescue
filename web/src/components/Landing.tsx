@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PrintRescueLogo from '../styles/assets/logo.png';
 import '../styles/landing.css';
 
-function Landing() {
+const Landing: React.FC = () => {
   return (
     <div className="main">
       <div className="wrapper">
@@ -48,6 +48,6 @@ function Landing() {
       </div>
     </div>
   );
-}
+};
 
 export default Landing;

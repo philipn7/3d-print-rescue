@@ -19,7 +19,7 @@ interface LoginValues {
   password: string;
 }
 
-const Login = () => {
+const Login: React.FC = () => {
   const [login] = useMutation(LOGIN_MUTATION);
   const navigate = useNavigate();
   const { state } = useLocation();

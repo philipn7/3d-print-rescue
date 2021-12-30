@@ -14,7 +14,7 @@ interface Props {
   children?: React.ReactNode;
 }
 
-const RequireAuth = ({ children }: Props) => {
+const RequireAuth: React.FC = ({ children }: Props) => {
   const location = useLocation();
   const { loading, error, data } = useQuery(IS_LOGGED_IN);
   if (loading) return <p>Loading...</p>;

@@ -1,6 +1,6 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { ErrorMessage, Field, Formik } from 'formik';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { ME_QUERY } from '../Pages/Profile';
 import Modal from 'react-modal';
 import { customStyles } from '../styles/CustomModalStyles';
@@ -20,7 +20,11 @@ interface ProfileValues {
   avatar: string;
 }
 
-function UpdateProfile() {
+const UpdateProfile: React.FC = () => {
+  const inputFile = useRef(null);
+  const [image, setImage] = useState('');
+  const [imageLoading, setImageLoading] = useState(false);
+
   const { loading, error, data } = useQuery(ME_QUERY);
   const [updateProfile] = useMutation(UPDATE_PROFILE_MUTATION, {
     refetchQueries: [{ query: ME_QUERY }],
@@ -43,6 +47,34 @@ function UpdateProfile() {
   const closeModal = () => {
     setModalIsOpen(false);
   };
+  const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append('file', files![0]);
+    data.append('upload_preset', 'printRescue');
+    setImageLoading(true);
+
+    const res = await fetch(`https://api.cloudinary.com/v1_1/dowb9pbr7/image/upload`, {
+      method: 'POST',
+      body: data,
+    });
+    try {
+      const file = await res.json();
+      console.log(file.secure_url);
+      setImage(file.secure_url);
+    } catch (error) {
+      console.error(error);
+    }
+
+    setImageLoading(false);
+  };
+
+  const onClickHandler = () => {
+    if (inputFile.current) {
+      const input = inputFile.current as HTMLElement;
+      input.click();
+    }
+  };
 
   return (
     <div>
@@ -55,11 +87,39 @@ function UpdateProfile() {
         contentLabel="Modal"
         style={customStyles}
       >
+        <input
+          type="file"
+          name="file"
+          onChange={uploadImage}
+          ref={inputFile}
+          style={{ display: 'none' }}
+        />
+        {imageLoading ? (
+          <h3>Loading...</h3>
+        ) : (
+          <>
+            {image ? (
+              <span>
+                <img
+                  src={image}
+                  style={{ width: '150px', borderRadius: '50%' }}
+                  alt="avatar"
+                  onClick={onClickHandler}
+                />
+              </span>
+            ) : (
+              <span onClick={onClickHandler}>
+                <i className="fa fa-user fa-5x" aria-hidden="true" onClick={onClickHandler}></i>
+              </span>
+            )}
+          </>
+        )}
+
         <Formik
           initialValues={initialValues}
           onSubmit={async (values, actions) => {
             await updateProfile({
-              variables: values,
+              variables: { ...values, avatar: image },
             });
 
             actions.setSubmitting(false);
@@ -81,6 +141,6 @@ function UpdateProfile() {
       </Modal>
     </div>
   );
-}
+};
 
 export default UpdateProfile;

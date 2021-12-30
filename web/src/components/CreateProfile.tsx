@@ -19,7 +19,7 @@ interface ProfileValues {
   avatar: string;
 }
 
-function CreateProfile() {
+const CreateProfile: React.FC = () => {
   const [createProfile] = useMutation(CREATE_PROFILE_MUTATION, {
     refetchQueries: [{ query: ME_QUERY }],
   });
@@ -75,6 +75,6 @@ function CreateProfile() {
       </Modal>
     </div>
   );
-}
+};
 
 export default CreateProfile;

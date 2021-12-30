@@ -15,7 +15,7 @@ interface User {
   id: number;
 }
 
-const Users = () => {
+const Users: React.FC = () => {
   const { loading, error, data } = useQuery(USERS_QUERY);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error.message}</p>;
