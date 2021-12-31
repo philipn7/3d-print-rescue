@@ -4,6 +4,7 @@ import Feed from '../components/Feed';
 import LeftNav from '../components/LeftNav';
 import '../styles/primary.css';
 import '../styles/home.css';
+import LikePost from '../components/LikePost';
 
 export const ME_QUERY = gql`
   query me {
