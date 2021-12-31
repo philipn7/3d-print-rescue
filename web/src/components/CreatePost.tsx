@@ -5,6 +5,7 @@ import React, { useRef, useState } from 'react';
 import Modal from 'react-modal';
 import { ME_QUERY } from '../pages/Profile';
 import { customStyles } from '../styles/CustomModalStyles';
+import { FEED_QUERY } from './Feed';
 
 const CREATE_POST_MUTATION = gql`
   mutation CreateDraft($data: PostCreateInput!) {
@@ -26,7 +27,7 @@ const CreatePost: React.FC = () => {
   const [imageLoading, setImageLoading] = useState(false);
 
   const [createPost] = useMutation(CREATE_POST_MUTATION, {
-    refetchQueries: [{ query: ME_QUERY }],
+    refetchQueries: [{ query: FEED_QUERY }],
   });
 
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -104,7 +105,7 @@ const CreatePost: React.FC = () => {
               <span>
                 <img
                   src={imageFile}
-                  style={{ width: '150px', borderRadius: '50%' }}
+                  style={{ width: '500px' }}
                   alt="avatar"
                   onClick={onClickHandler}
                 />
@@ -119,19 +120,23 @@ const CreatePost: React.FC = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={async (values, { setSubmitting }) => {
-            setSubmitting(true);
-            console.log({ data: { ...values, image: imageFile } });
+            if (imageFile) {
+              setSubmitting(true);
+              console.log({ data: { ...values, image: imageFile } });
 
-            try {
-              await createPost({
-                variables: { data: { ...values, image: imageFile } },
-              });
-            } catch (error) {
-              console.log(JSON.stringify(error, null, 2));
+              try {
+                await createPost({
+                  variables: { data: { ...values, image: imageFile } },
+                });
+              } catch (error) {
+                console.log(JSON.stringify(error, null, 2));
+              }
+
+              setSubmitting(false);
+              setIsOpen(false);
+            } else {
+              alert('You must upload a picture to create a new post!');
             }
-
-            setSubmitting(false);
-            setIsOpen(false);
           }}
         >
           <Form>

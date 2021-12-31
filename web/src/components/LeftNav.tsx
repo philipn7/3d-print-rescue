@@ -22,18 +22,6 @@ const LeftNav: React.FC = () => {
       </Link>
       <Link to="/users">
         <h2>
-          <i className="fa fa-envelope" aria-hidden="true" />{' '}
-          <span className="title">Messages</span>
-        </h2>
-      </Link>
-      <Link to="/users">
-        <h2>
-          <i className="fa fa-bell" aria-hidden="true" />{' '}
-          <span className="title">Notifications</span>
-        </h2>
-      </Link>
-      <Link to="/users">
-        <h2>
           <i className="fa fa-ellipsis-h" aria-hidden="true" /> <span className="title">More</span>
         </h2>
       </Link>

@@ -8,6 +8,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import RequireAuth from './components/RequireAuth';
 import Profile from './pages/Profile';
+import Home from './pages/Home';
 
 // Local storage cookies are NOT secure. Change this later...
 const httpLink = createHttpLink({ uri: 'http://localhost:4000' });
@@ -33,6 +34,14 @@ const App = () => {
     <ApolloProvider client={client}>
       <Router>
         <Routes>
+          <Route
+            path="/"
+            element={
+              <RequireAuth>
+                <Home />
+              </RequireAuth>
+            }
+          />
           <Route
             path="/users"
             element={

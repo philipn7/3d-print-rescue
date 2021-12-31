@@ -23,7 +23,7 @@ model Post {
   title     String
   content   String?
   image     String
-  published Boolean  @default(false)
+  published Boolean  @default(true)
   viewCount Int      @default(0)
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  Int?

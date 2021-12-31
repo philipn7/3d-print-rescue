@@ -1,0 +1,18 @@
+.feed-header {
+  margin-left: 10px;
+}
+
+.feed-container {
+  border-bottom: 1px solid var(--accent);
+  margin-top: 10px;
+}
+
+.date-time {
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+.feed-user-info {
+  display: flex;
+  flex-direction: row;
+}
