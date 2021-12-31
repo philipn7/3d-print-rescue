@@ -4,10 +4,10 @@ import Users from './components/Users';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Landing from './components/Landing';
 import { setContext } from '@apollo/client/link/context';
-import Signup from './Pages/Signup';
-import Login from './Pages/Login';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
 import RequireAuth from './components/RequireAuth';
-import Profile from './Pages/Profile';
+import Profile from './pages/Profile';
 
 // Local storage cookies are NOT secure. Change this later...
 const httpLink = createHttpLink({ uri: 'http://localhost:4000' });

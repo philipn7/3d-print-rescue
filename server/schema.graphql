@@ -28,6 +28,7 @@ type Post {
   content: String
   createdAt: DateTime!
   id: Int!
+  image: String!
   published: Boolean!
   title: String!
   updatedAt: DateTime!
@@ -36,6 +37,7 @@ type Post {
 
 input PostCreateInput {
   content: String
+  image: String!
   title: String!
 }
 

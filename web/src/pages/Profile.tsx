@@ -58,8 +58,14 @@ const Profile: React.FC = () => {
               {data.me.profile ? <UpdateProfile /> : <CreateProfile />}
             </div>
 
-            <p>{data.me.profile.bio}</p>
-            <p>{data.me.profile.location}</p>
+            {data.me.profile ? (
+              <div>
+                <p>{data.me.profile.bio}</p>
+                <p>{data.me.profile.location}</p>
+              </div>
+            ) : (
+              ''
+            )}
           </div>
         </div>
         <div className="right">Right Nav</div>

@@ -1,7 +1,7 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { ErrorMessage, Field, Formik } from 'formik';
 import { useRef, useState } from 'react';
-import { ME_QUERY } from '../Pages/Profile';
+import { ME_QUERY } from '../pages/Profile';
 import Modal from 'react-modal';
 import { customStyles } from '../styles/CustomModalStyles';
 
@@ -21,7 +21,7 @@ interface ProfileValues {
 }
 
 const UpdateProfile: React.FC = () => {
-  const inputFile = useRef(null);
+  const inputFile = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState('');
   const [imageLoading, setImageLoading] = useState(false);
 
@@ -60,7 +60,6 @@ const UpdateProfile: React.FC = () => {
     });
     try {
       const file = await res.json();
-      console.log(file.secure_url);
       setImage(file.secure_url);
     } catch (error) {
       console.error(error);
@@ -108,7 +107,7 @@ const UpdateProfile: React.FC = () => {
                 />
               </span>
             ) : (
-              <span onClick={onClickHandler}>
+              <span>
                 <i className="fa fa-user fa-5x" aria-hidden="true" onClick={onClickHandler}></i>
               </span>
             )}

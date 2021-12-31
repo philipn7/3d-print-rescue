@@ -1,7 +1,7 @@
 import { gql, useMutation } from '@apollo/client';
 import { ErrorMessage, Field, Formik } from 'formik';
 import { useState } from 'react';
-import { ME_QUERY } from '../Pages/Profile';
+import { ME_QUERY } from '../pages/Profile';
 import Modal from 'react-modal';
 import { customStyles } from '../styles/CustomModalStyles';
 

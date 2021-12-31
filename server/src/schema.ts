@@ -165,24 +165,6 @@ const Mutation = objectType({
       },
     })
 
-    t.field('createProfile', {
-      type: 'Profile',
-      args: {
-        bio: stringArg(),
-        location: stringArg(),
-        avatar: stringArg(),
-      },
-      resolve: (_parent, args, context: Context) => {
-        const userId = getUserId(context)
-        return context.prisma.profile.create({
-          data: {
-            ...args,
-            user: { connect: { id: Number(userId) } },
-          },
-        })
-      },
-    })
-
     t.field('updateProfile', {
       type: 'Profile',
       args: {
@@ -239,6 +221,7 @@ const Mutation = objectType({
             title: args.data.title,
             content: args.data.content,
             authorId: userId,
+            image: args.data.image,
           },
         })
       },
@@ -337,6 +320,7 @@ const Post = objectType({
     t.nonNull.field('updatedAt', { type: 'DateTime' })
     t.nonNull.string('title')
     t.string('content')
+    t.nonNull.string('image')
     t.nonNull.boolean('published')
     t.nonNull.int('viewCount')
     t.field('author', {
@@ -398,6 +382,7 @@ const PostCreateInput = inputObjectType({
   definition(t) {
     t.nonNull.string('title')
     t.string('content')
+    t.nonNull.string('image')
   },
 })
 
