@@ -227,6 +227,22 @@ const Mutation = objectType({
       },
     })
 
+    t.field('likePost', {
+      type: 'LikedPost',
+      args: {
+        id: intArg(),
+      },
+      resolve: (_parent, { id }, context: Context) => {
+        const userId = getUserId(context)
+        return context.prisma.likedPost.create({
+          data: {
+            post: { connect: { id: Number(id) } },
+            user: { connect: { id: Number(userId) } },
+          },
+        })
+      },
+    })
+
     t.field('togglePublishPost', {
       type: 'Post',
       args: {
@@ -309,6 +325,16 @@ const User = objectType({
           .profile()
       },
     })
+    t.nonNull.list.nonNull.field('liked', {
+      type: 'LikedPost',
+      resolve: (parent, _, context: Context) => {
+        return context.prisma.user
+          .findUnique({
+            where: { id: parent.id || undefined },
+          })
+          .liked()
+      },
+    })
   },
 })
 
@@ -331,6 +357,44 @@ const Post = objectType({
             where: { id: parent.id || undefined },
           })
           .author()
+      },
+    })
+    t.nonNull.list.nonNull.field('liked', {
+      type: 'LikedPost',
+      resolve: (parent, _, context: Context) => {
+        return context.prisma.post
+          .findUnique({
+            where: { id: parent.id || undefined },
+          })
+          .liked()
+      },
+    })
+  },
+})
+
+const LikedPost = objectType({
+  name: 'LikedPost',
+  definition(t) {
+    t.nonNull.int('id')
+    t.nonNull.field('createdAt', { type: 'DateTime' })
+    t.field('user', {
+      type: 'User',
+      resolve: (parent, _, context: Context) => {
+        return context.prisma.likedPost
+          .findUnique({
+            where: { id: parent.id || undefined },
+          })
+          .user()
+      },
+    })
+    t.field('post', {
+      type: 'Post',
+      resolve: (parent, _, context: Context) => {
+        return context.prisma.likedPost
+          .findUnique({
+            where: { id: parent.id || undefined },
+          })
+          .post()
       },
     })
   },
@@ -409,6 +473,7 @@ const schemaWithoutPermissions = makeSchema({
     Mutation,
     Post,
     Profile,
+    LikedPost,
     User,
     AuthPayload,
     UserUniqueInput,

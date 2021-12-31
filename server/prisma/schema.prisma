@@ -8,25 +8,27 @@ datasource db {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
+  id       Int         @id @default(autoincrement())
+  email    String      @unique
   password String
   name     String?
   posts    Post[]
   profile  Profile?
+  liked    LikedPost[]
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int         @id @default(autoincrement())
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
   title     String
   content   String?
   image     String
-  published Boolean  @default(true)
-  viewCount Int      @default(0)
-  author    User?    @relation(fields: [authorId], references: [id])
+  published Boolean     @default(true)
+  viewCount Int         @default(0)
+  author    User?       @relation(fields: [authorId], references: [id])
   authorId  Int?
+  liked     LikedPost[]
 }
 
 model Profile {
@@ -36,5 +38,14 @@ model Profile {
   location  String?
   avatar    String?
   userId    Int?     @unique
+  user      User?    @relation(fields: [userId], references: [id])
+}
+
+model LikedPost {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  postId    Int?
+  post      Post?    @relation(fields: [postId], references: [id])
+  userId    Int?
   user      User?    @relation(fields: [userId], references: [id])
 }

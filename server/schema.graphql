@@ -12,11 +12,19 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 """
 scalar DateTime
 
+type LikedPost {
+  createdAt: DateTime!
+  id: Int!
+  post: Post
+  user: User
+}
+
 type Mutation {
   createDraft(data: PostCreateInput!): Post
   createProfile(avatar: String, bio: String, location: String): Profile
   deletePost(id: Int!): Post
   incrementPostViewCount(id: Int!): Post
+  likePost(id: Int): LikedPost
   login(email: String!, password: String!): AuthPayload
   signup(email: String!, name: String, password: String!): AuthPayload
   togglePublishPost(id: Int!): Post
@@ -29,6 +37,7 @@ type Post {
   createdAt: DateTime!
   id: Int!
   image: String!
+  liked: [LikedPost!]!
   published: Boolean!
   title: String!
   updatedAt: DateTime!
@@ -70,6 +79,7 @@ enum SortOrder {
 type User {
   email: String!
   id: Int!
+  liked: [LikedPost!]!
   name: String
   posts: [Post!]!
   profile: Profile
