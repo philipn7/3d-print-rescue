@@ -243,6 +243,24 @@ const Mutation = objectType({
       },
     })
 
+    t.field('createComment', {
+      type: 'Comment',
+      args: {
+        content: stringArg(),
+        id: intArg(),
+      },
+      resolve: (_, args, context: Context) => {
+        const userId = getUserId(context)
+        return context.prisma.comment.create({
+          data: {
+            content: args.content,
+            post: { connect: { id: Number(args.id) } },
+            user: { connect: { id: Number(userId) } },
+          },
+        })
+      },
+    })
+
     t.field('togglePublishPost', {
       type: 'Post',
       args: {
@@ -335,6 +353,16 @@ const User = objectType({
           .liked()
       },
     })
+    t.nonNull.list.nonNull.field('comments', {
+      type: 'Comment',
+      resolve: (parent, _, context: Context) => {
+        return context.prisma.user
+          .findUnique({
+            where: { id: parent.id || undefined },
+          })
+          .comments()
+      },
+    })
   },
 })
 
@@ -367,6 +395,16 @@ const Post = objectType({
             where: { id: parent.id || undefined },
           })
           .liked()
+      },
+    })
+    t.nonNull.list.nonNull.field('comments', {
+      type: 'Comment',
+      resolve: (parent, _, context: Context) => {
+        return context.prisma.post
+          .findUnique({
+            where: { id: parent.id || undefined },
+          })
+          .comments()
       },
     })
   },
@@ -416,6 +454,35 @@ const Profile = objectType({
             where: { id: parent.id || undefined },
           })
           .user()
+      },
+    })
+  },
+})
+
+const Comment = objectType({
+  name: 'Comment',
+  definition(t) {
+    t.nonNull.int('id')
+    t.nonNull.field('createdAt', { type: 'DateTime' })
+    t.string('content')
+    t.field('user', {
+      type: 'User',
+      resolve: (parent, _, context: Context) => {
+        return context.prisma.comment
+          .findUnique({
+            where: { id: parent.id || undefined },
+          })
+          .user()
+      },
+    })
+    t.field('post', {
+      type: 'Post',
+      resolve: (parent, _, context: Context) => {
+        return context.prisma.comment
+          .findUnique({
+            where: { id: parent.id || undefined },
+          })
+          .post()
       },
     })
   },
@@ -475,6 +542,7 @@ const schemaWithoutPermissions = makeSchema({
     Profile,
     LikedPost,
     User,
+    Comment,
     AuthPayload,
     UserUniqueInput,
     UserCreateInput,
