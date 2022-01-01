@@ -1,5 +1,6 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { formatDistance, subDays } from 'date-fns';
+import { Link } from 'react-router-dom';
 import { ME_QUERY } from '../pages/Profile';
 import '../styles/feed.css';
 import '../styles/primary.css';
@@ -72,33 +73,35 @@ const Feed = () => {
         .map((post: Post) => (
           <div className="feed-container" key={post.id}>
             <div className="feed-header">
-              <div className="feed-user-info">
-                <img
-                  src={post.author.profile.avatar}
-                  style={{ width: '20px', borderRadius: '50%' }}
-                  alt="avatar"
-                />
-                <div>{post.author.name}</div>
-              </div>
-              <h3>{post.title}</h3>
-              <img src={post.image} style={{ width: '500px' }} alt="post" />
-              <div>{post.content}</div>
-              <p className="date-time">
-                {formatDistance(subDays(new Date(post.createdAt), 0), new Date())} ago
-              </p>
-              <div className="likes">
-                {meData.me.liked.map((t: LikedPost) => t.post.id).includes(post.id) ? (
-                  <span>
-                    <i className="fas fa-thumbs-up" aria-hidden="true" />
-                    {post.liked.length}
-                  </span>
-                ) : (
-                  <span>
-                    <LikePost postId={post.id} />
-                    {post.liked.length}
-                  </span>
-                )}
-              </div>
+              <Link to={`/post/${post.id}`}>
+                <div className="feed-user-info">
+                  <img
+                    src={post.author.profile.avatar}
+                    style={{ width: '20px', borderRadius: '50%' }}
+                    alt="avatar"
+                  />
+                  <div>{post.author.name}</div>
+                </div>
+                <h3>{post.title}</h3>
+                <img src={post.image} style={{ width: '500px' }} alt="post" />
+                <div>{post.content}</div>
+                <p className="date-time">
+                  {formatDistance(subDays(new Date(post.createdAt), 0), new Date())} ago
+                </p>
+                <div className="likes">
+                  {meData.me.liked.map((t: LikedPost) => t.post.id).includes(post.id) ? (
+                    <span>
+                      <i className="fas fa-thumbs-up" aria-hidden="true" />
+                      {post.liked.length}
+                    </span>
+                  ) : (
+                    <span>
+                      <LikePost postId={post.id} />
+                      {post.liked.length}
+                    </span>
+                  )}
+                </div>
+              </Link>
               <span style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
                 <CreateComment
                   avatar={post.author.profile.avatar}

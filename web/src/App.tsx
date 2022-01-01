@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import RequireAuth from './components/RequireAuth';
 import Profile from './pages/Profile';
 import Home from './pages/Home';
+import Post from './pages/Post';
 
 // Local storage cookies are NOT secure. Change this later...
 const httpLink = createHttpLink({ uri: 'http://localhost:4000' });
@@ -43,10 +44,10 @@ const App = () => {
             }
           />
           <Route
-            path="/users"
+            path="/post/:id"
             element={
               <RequireAuth>
-                <Users />
+                <Post />
               </RequireAuth>
             }
           />
