@@ -30,6 +30,7 @@ export const permissions = shield({
     createDraft: rules.isAuthenticatedUser,
     createProfile: rules.isAuthenticatedUser,
     likePost: rules.isAuthenticatedUser,
+    createComment: rules.isAuthenticatedUser,
     deletePost: rules.isPostOwner,
     incrementPostViewCount: rules.isAuthenticatedUser,
     togglePublishPost: rules.isPostOwner,

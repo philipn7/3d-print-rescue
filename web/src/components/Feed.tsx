@@ -3,6 +3,7 @@ import { formatDistance, subDays } from 'date-fns';
 import { ME_QUERY } from '../pages/Profile';
 import '../styles/feed.css';
 import '../styles/primary.css';
+import CreateComment from './CreateComment';
 import LikePost from './LikePost';
 
 export const FEED_QUERY = gql`
@@ -14,6 +15,9 @@ export const FEED_QUERY = gql`
       image
       published
       viewCount
+      comments {
+        id
+      }
       liked {
         id
       }
@@ -43,6 +47,7 @@ const Feed = () => {
     content: string;
     image: string;
     createdAt: Date;
+    comments: [];
     liked: [];
     author: {
       name: string;
@@ -94,6 +99,15 @@ const Feed = () => {
                   </span>
                 )}
               </div>
+              <span style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+                <CreateComment
+                  avatar={post.author.profile.avatar}
+                  name={post.author.name}
+                  post={post.content}
+                  id={post.id}
+                />
+                {post.comments.length > 0 ? post.comments.length : null}
+              </span>
             </div>
           </div>
         ))}

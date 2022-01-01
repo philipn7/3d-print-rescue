@@ -246,8 +246,8 @@ const Mutation = objectType({
     t.field('createComment', {
       type: 'Comment',
       args: {
-        content: stringArg(),
         id: intArg(),
+        content: stringArg(),
       },
       resolve: (_, args, context: Context) => {
         const userId = getUserId(context)
