@@ -35,7 +35,7 @@ h2 {
 }
 h2:hover {
   /* color: ${(props) => props.theme.primary}; */
-  background: #55abee29;
+  background: #00cc99;
   @media only screen and (max-width: 1200px) {
     /* color: ${(props) => props.theme.primary}; */
     background: transparent;
@@ -49,7 +49,7 @@ button span {
 }
 
 button {
-  background-color: #55abee;
+  background-color: #669999;
   border: 0;
   color: #fff;
 
@@ -65,7 +65,7 @@ button span {
   font-size: 15px;
 }
 button:hover {
-  background: #228dcf;
+  background: #00cc99;
 }
 button:active span {
   background-color: rgba(0, 0, 0, 0.2);

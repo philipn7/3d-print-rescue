@@ -5,6 +5,7 @@
 .feed-container {
   border-bottom: 1px solid var(--accent);
   margin-top: 10px;
+  color: white;
 }
 
 .date-time {

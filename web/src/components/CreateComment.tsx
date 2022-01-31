@@ -52,7 +52,7 @@ const CreateComment: React.FC<Props> = ({ post, name, avatar, id }: Props) => {
   return (
     <div>
       <span onClick={openModal}>
-        <i className="far fa-comment" aria-hidden="true" />
+        <i className="far fa-comments" aria-hidden="true" />
       </span>
 
       <Modal

@@ -88,20 +88,21 @@ const Feed = () => {
                 <p className="date-time">
                   {formatDistance(subDays(new Date(post.createdAt), 0), new Date())} ago
                 </p>
-                <div className="likes">
-                  {meData.me.liked.map((t: LikedPost) => t.post.id).includes(post.id) ? (
-                    <span>
-                      <i className="fas fa-thumbs-up" aria-hidden="true" />
-                      {post.liked.length}
-                    </span>
-                  ) : (
-                    <span>
-                      <LikePost postId={post.id} />
-                      {post.liked.length}
-                    </span>
-                  )}
-                </div>
               </Link>
+              <div className="likes">
+                {meData.me.liked.map((t: LikedPost) => t.post.id).includes(post.id) ? (
+                  <span>
+                    <i className="fas fa-medal" aria-hidden="true" />
+                    {post.liked.length}
+                  </span>
+                ) : (
+                  <span>
+                    <LikePost postId={post.id} />
+                    {post.liked.length}
+                  </span>
+                )}
+              </div>
+
               <span style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
                 <CreateComment
                   avatar={post.author.profile.avatar}

@@ -35,11 +35,11 @@ const Home: React.FC = () => {
         </div>
         <div className="home">
           <div className="home-header">
-            <h3 className="home-title">Home</h3>
+            <h3 className="home-title">3D Print Rescue</h3>
           </div>
           <Feed />
         </div>
-        <div className="right">Right Nav</div>
+        <div className="right"></div>
       </div>
     </>
   );
