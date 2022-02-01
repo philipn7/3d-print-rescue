@@ -89,7 +89,7 @@ const Feed = () => {
               <Link to={`/post/${post.id}`}>
                 <h3>{post.title}</h3>
 
-                <img src={post.image} style={{ width: '500px' }} alt="post" />
+                <img src={post.image} style={{ width: '500px', borderRadius: '2%' }} alt="post" />
               </Link>
 
               <div className="feed-tags">
@@ -112,7 +112,7 @@ const Feed = () => {
                 {formatDistance(subDays(new Date(post.createdAt), 0), new Date())} ago
               </p>
 
-              <span style={{ display: 'flex' }}>
+              <span style={{ display: 'flex', gap: '10px' }}>
                 <div className="likes">
                   {meData.me.liked.map((t: LikedPost) => t.post.id).includes(post.id) ? (
                     <span>
