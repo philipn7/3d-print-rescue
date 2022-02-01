@@ -89,7 +89,7 @@ function Post() {
             </span>
             <h3 className="home-title">{data.postById.title}</h3>
           </div>
-          <img src={data.postById.image} style={{ width: '850px' }} alt="post" />
+          <img src={data.postById.image} style={{ width: '1000px' }} alt="post" />
           <div className="feed-tags">
             {data.postById.tags.map((tag: Tag) => (
               <div className="rectangle">{tag.name}</div>
@@ -142,7 +142,7 @@ function Post() {
               <p>{comment.content}</p>
             </div>
           ))}
-          <span style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+          <span style={{ display: 'flex' }}>
             <CreateComment
               avatar={data.postById.author.profile.avatar}
               name={data.postById.author.name}

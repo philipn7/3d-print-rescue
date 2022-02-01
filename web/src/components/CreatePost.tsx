@@ -110,8 +110,8 @@ const CreatePost: React.FC = () => {
                 />
               </span>
             ) : (
-              <span>
-                <i className="fa fa-user fa-5x" aria-hidden="true" onClick={onClickHandler}></i>
+              <span style={{ marginLeft: '200px' }}>
+                <i className="far fa-images fa-5x" aria-hidden="true" onClick={onClickHandler}></i>
               </span>
             )}
           </>

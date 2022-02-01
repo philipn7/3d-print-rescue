@@ -28,8 +28,8 @@
   border-radius: 20px; /* Making border radius */
   width: 100px; /* Making auto-sizable width */
   height: auto; /* Making auto-sizable height */
-  padding: 5px 30px 5px 30px; /* Making space around letters */
-  font-size: 18px; /* Changing font size */
+  padding: 2px 10px 2px 10px; /* Making space around letters */
+  font-size: 11px; /* Changing font size */
   flex-basis: 100px;
 }
 

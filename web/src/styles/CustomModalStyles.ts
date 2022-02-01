@@ -6,7 +6,7 @@ export const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    background: '#fff',
+    background: '#5d6868',
     borderRadius: '25px',
     maxWidth: '40em',
     minWidth: '30em',

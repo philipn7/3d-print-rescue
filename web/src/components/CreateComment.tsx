@@ -93,11 +93,21 @@ const CreateComment: React.FC<Props> = ({ post, name, avatar, id }: Props) => {
           }}
         >
           <Form>
-            <img
-              src={data.me.profile?.avatar}
-              style={{ width: '40px', borderRadius: '50%' }}
-              alt="avatar"
-            />
+            <span
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr 8fr',
+                marginTop: '10px',
+                marginLeft: '10px',
+              }}
+            >
+              <img
+                src={data.me.profile?.avatar}
+                style={{ width: '40px', borderRadius: '50%' }}
+                alt="avatar"
+              />
+              <h3>{data.me.name}</h3>
+            </span>
             <Field name="content" type="text" as="textarea" placeholder="Your reply..." />
             <ErrorMessage name="content" component={'div'} />
 

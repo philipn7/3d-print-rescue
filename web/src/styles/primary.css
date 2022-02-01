@@ -1,6 +1,6 @@
 .primary {
   display: grid;
-  grid-template-columns: 0.7fr 1.3fr 0.9fr;
+  grid-template-columns: 0.6fr 0.6fr 0.9fr;
   margin-right: 50px;
   margin-left: 50px;
   margin-bottom: 50px;

@@ -90,47 +90,52 @@ const Feed = () => {
                 <h3>{post.title}</h3>
 
                 <img src={post.image} style={{ width: '500px' }} alt="post" />
-                <div className="feed-user-info">
-                  <img
-                    src={post.author.profile.avatar}
-                    style={{ width: '20px', borderRadius: '50%' }}
-                    alt="avatar"
-                  />
-                  <div>{post.author.name}</div>
-                </div>
-                <div>{post.content}</div>
-                <p className="date-time">
-                  {formatDistance(subDays(new Date(post.createdAt), 0), new Date())} ago
-                </p>
               </Link>
+
               <div className="feed-tags">
                 {post.tags.map((tag: Tag) => (
                   <div className="rectangle">{tag.name}</div>
                 ))}
                 <CreateTag id={post.id} />
               </div>
-              <div className="likes">
-                {meData.me.liked.map((t: LikedPost) => t.post.id).includes(post.id) ? (
-                  <span>
-                    <i className="fas fa-medal" aria-hidden="true" />
-                    {post.liked.length}
-                  </span>
-                ) : (
-                  <span>
-                    <LikePost postId={post.id} />
-                    {post.liked.length}
-                  </span>
-                )}
+
+              <div className="feed-user-info">
+                <img
+                  src={post.author.profile.avatar}
+                  style={{ width: '20px', borderRadius: '50%' }}
+                  alt="avatar"
+                />
+                <div>{post.author.name}</div>
               </div>
 
+              <p className="date-time">
+                {formatDistance(subDays(new Date(post.createdAt), 0), new Date())} ago
+              </p>
+
               <span style={{ display: 'flex' }}>
-                <CreateComment
-                  avatar={post.author.profile.avatar}
-                  name={post.author.name}
-                  post={post.content}
-                  id={post.id}
-                />
-                {post.comments.length > 0 ? post.comments.length : null}
+                <div className="likes">
+                  {meData.me.liked.map((t: LikedPost) => t.post.id).includes(post.id) ? (
+                    <span>
+                      <i className="fas fa-medal" aria-hidden="true" />
+                      {post.liked.length}
+                    </span>
+                  ) : (
+                    <span>
+                      <LikePost postId={post.id} />
+                      {post.liked.length}
+                    </span>
+                  )}
+                </div>
+
+                <span style={{ display: 'flex' }}>
+                  <CreateComment
+                    avatar={post.author.profile.avatar}
+                    name={post.author.name}
+                    post={post.content}
+                    id={post.id}
+                  />
+                  {post.comments.length > 0 ? post.comments.length : null}
+                </span>
               </span>
             </div>
           </div>
