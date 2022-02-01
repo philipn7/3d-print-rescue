@@ -1,5 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
 import { useNavigate, useParams } from 'react-router-dom';
+import CreateComment from '../components/CreateComment';
+import CreateTag from '../components/CreateTag';
 import LeftNav from '../components/LeftNav';
 import '../styles/home.css';
 import '../styles/primary.css';
@@ -11,6 +13,9 @@ export const POST_QUERY = gql`
       title
       content
       image
+      tags {
+        name
+      }
       author {
         id
         name
@@ -40,6 +45,8 @@ interface CommentType {
   id: number;
   content: string;
   createdAt: Date;
+  title: String;
+  tags: [];
   user: {
     id: number;
     name: string;
@@ -47,6 +54,14 @@ interface CommentType {
       id: number;
       avatar: string;
     };
+  };
+}
+
+interface Tag {
+  id: number;
+  name: string;
+  post: {
+    id: number;
   };
 }
 
@@ -66,15 +81,20 @@ function Post() {
   return (
     <>
       <div className="primary">
-        <div className="left">
-          <LeftNav />
-        </div>
+        <div className="left"></div>
         <div className="home">
           <div className="home-header">
             <span className="back-arrow" onClick={() => navigate(-1)}>
               <i className="fa fa-arrow-left" aria-hidden="true"></i>
             </span>
-            <h3 className="home-title">Post</h3>
+            <h3 className="home-title">{data.postById.title}</h3>
+          </div>
+          <img src={data.postById.image} style={{ width: '850px' }} alt="post" />
+          <div className="feed-tags">
+            {data.postById.tags.map((tag: Tag) => (
+              <div className="rectangle">{tag.name}</div>
+            ))}
+            <CreateTag id={data.postById.id} />
           </div>
           <div
             style={{
@@ -122,6 +142,15 @@ function Post() {
               <p>{comment.content}</p>
             </div>
           ))}
+          <span style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+            <CreateComment
+              avatar={data.postById.author.profile.avatar}
+              name={data.postById.author.name}
+              post={data.postById.content}
+              id={data.postById.id}
+            />
+            {data.postById.comments.length > 0 ? data.postById.comments.length : null}
+          </span>
         </div>
         <div className="right"></div>
       </div>

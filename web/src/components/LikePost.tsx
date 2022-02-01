@@ -32,7 +32,7 @@ const LikePost = ({ postId }: Props) => {
 
   return (
     <span onClick={handleCreateLike} style={{ marginRight: '5px' }}>
-      <i className="far fa-thumbs-up" aria-hidden="true" />
+      <i className="fas fa-medal" aria-hidden="true" />
     </span>
   );
 };

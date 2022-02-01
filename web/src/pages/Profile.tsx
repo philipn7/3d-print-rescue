@@ -74,7 +74,7 @@ const Profile: React.FC = () => {
             )}
           </div>
         </div>
-        <div className="right">Right Nav</div>
+        <div className="right"></div>
       </div>
     </>
   );

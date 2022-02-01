@@ -5,6 +5,7 @@ import { ME_QUERY } from '../pages/Profile';
 import '../styles/feed.css';
 import '../styles/primary.css';
 import CreateComment from './CreateComment';
+import CreateTag from './CreateTag';
 import LikePost from './LikePost';
 
 export const FEED_QUERY = gql`
@@ -21,6 +22,9 @@ export const FEED_QUERY = gql`
       }
       liked {
         id
+      }
+      tags {
+        name
       }
       author {
         name
@@ -50,6 +54,7 @@ const Feed = () => {
     createdAt: Date;
     comments: [];
     liked: [];
+    tags: [];
     author: {
       name: string;
       profile: {
@@ -65,6 +70,14 @@ const Feed = () => {
     };
   }
 
+  interface Tag {
+    id: number;
+    name: string;
+    post: {
+      id: number;
+    };
+  }
+
   return (
     <div>
       {data.feed
@@ -74,6 +87,9 @@ const Feed = () => {
           <div className="feed-container" key={post.id}>
             <div className="feed-header">
               <Link to={`/post/${post.id}`}>
+                <h3>{post.title}</h3>
+
+                <img src={post.image} style={{ width: '500px' }} alt="post" />
                 <div className="feed-user-info">
                   <img
                     src={post.author.profile.avatar}
@@ -82,13 +98,17 @@ const Feed = () => {
                   />
                   <div>{post.author.name}</div>
                 </div>
-                <h3>{post.title}</h3>
-                <img src={post.image} style={{ width: '500px' }} alt="post" />
                 <div>{post.content}</div>
                 <p className="date-time">
                   {formatDistance(subDays(new Date(post.createdAt), 0), new Date())} ago
                 </p>
               </Link>
+              <div className="feed-tags">
+                {post.tags.map((tag: Tag) => (
+                  <div className="rectangle">{tag.name}</div>
+                ))}
+                <CreateTag id={post.id} />
+              </div>
               <div className="likes">
                 {meData.me.liked.map((t: LikedPost) => t.post.id).includes(post.id) ? (
                   <span>
@@ -103,7 +123,7 @@ const Feed = () => {
                 )}
               </div>
 
-              <span style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+              <span style={{ display: 'flex' }}>
                 <CreateComment
                   avatar={post.author.profile.avatar}
                   name={post.author.name}

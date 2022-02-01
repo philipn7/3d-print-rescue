@@ -31,6 +31,7 @@ type Mutation {
   createComment(content: String, id: Int): Comment
   createDraft(data: PostCreateInput!): Post
   createProfile(avatar: String, bio: String, location: String): Profile
+  createTag(id: Int, name: String): Tag
   deletePost(id: Int!): Post
   incrementPostViewCount(id: Int!): Post
   likePost(id: Int): LikedPost
@@ -49,6 +50,7 @@ type Post {
   image: String!
   liked: [LikedPost!]!
   published: Boolean!
+  tags: [Tag!]!
   title: String!
   updatedAt: DateTime!
   viewCount: Int!
@@ -84,6 +86,12 @@ type Query {
 enum SortOrder {
   asc
   desc
+}
+
+type Tag {
+  id: Int!
+  name: String!
+  post: Post
 }
 
 type User {

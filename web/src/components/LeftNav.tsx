@@ -7,7 +7,7 @@ import CreatePost from './CreatePost';
 const LeftNav: React.FC = () => {
   return (
     <div>
-      <Link to="/users">
+      <Link to="/">
         <img src={favicon} alt="logo" style={{ width: '40px' }} />
       </Link>
       <Link to="/">

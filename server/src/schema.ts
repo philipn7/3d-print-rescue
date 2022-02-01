@@ -261,6 +261,22 @@ const Mutation = objectType({
       },
     })
 
+    t.field('createTag', {
+      type: 'Tag',
+      args: {
+        id: intArg(),
+        name: stringArg(),
+      },
+      resolve: (_, args, context: Context) => {
+        return context.prisma.tag.create({
+          data: {
+            name: args.name!,
+            post: { connect: { id: Number(args.id) } },
+          },
+        })
+      },
+    })
+
     t.field('togglePublishPost', {
       type: 'Post',
       args: {
@@ -407,6 +423,16 @@ const Post = objectType({
           .comments()
       },
     })
+    t.nonNull.list.nonNull.field('tags', {
+      type: 'Tag',
+      resolve: (parent, _, context: Context) => {
+        return context.prisma.post
+          .findUnique({
+            where: { id: parent.id || undefined },
+          })
+          .tags()
+      },
+    })
   },
 })
 
@@ -488,6 +514,24 @@ const Comment = objectType({
   },
 })
 
+const Tag = objectType({
+  name: 'Tag',
+  definition(t) {
+    t.nonNull.int('id')
+    t.nonNull.string('name')
+    t.field('post', {
+      type: 'Post',
+      resolve: (parent, _, context: Context) => {
+        return context.prisma.tag
+          .findUnique({
+            where: { id: parent.id || undefined },
+          })
+          .post()
+      },
+    })
+  },
+})
+
 const SortOrder = enumType({
   name: 'SortOrder',
   members: ['asc', 'desc'],
@@ -541,6 +585,7 @@ const schemaWithoutPermissions = makeSchema({
     Post,
     Profile,
     LikedPost,
+    Tag,
     User,
     Comment,
     AuthPayload,

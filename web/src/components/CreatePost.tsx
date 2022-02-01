@@ -3,7 +3,6 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import gql from 'graphql-tag';
 import React, { useRef, useState } from 'react';
 import Modal from 'react-modal';
-import { ME_QUERY } from '../pages/Profile';
 import { customStyles } from '../styles/CustomModalStyles';
 import { FEED_QUERY } from './Feed';
 
@@ -146,8 +145,8 @@ const CreatePost: React.FC = () => {
             <ErrorMessage name="content" component={'div'} />
 
             <div className="footer"></div>
-            <button type="submit" className="tweet-button">
-              <span>Tweet</span>
+            <button type="submit" className="post-button">
+              <span>Post</span>
             </button>
           </Form>
         </Formik>
